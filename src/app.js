@@ -7,7 +7,8 @@ const { NODE_ENV } = require("./config");
 const authRouter = require("./auth/auth-router");
 const userRouter = require("./registration/registration-router");
 const siteRouter = require("./site/site-router");
-
+const inventoryRouter = require("./inventory/inventory-router");
+const testRouter = require("./site/testRouter");
 const app = express();
 
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";
@@ -20,7 +21,9 @@ app.get("/", (req, res) => {
   res.send("Hello, world!");
 });
 
+app.use("/test", testRouter);
 app.use("/api/sites", siteRouter);
+app.use("/api/items", inventoryRouter);
 
 app.use(function errorHandler(error, req, res, next) {
   let response;

@@ -1,3 +1,4 @@
+
 BEGIN; 
 
 CREATE TABLE "inventory" (
