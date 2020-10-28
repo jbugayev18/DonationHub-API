@@ -1,5 +1,5 @@
 const boxQuery =
-  "box(point(lat, lon), point(lat, lon)) && '(?, ?), (?, ?)'::box";
+  "box(point(lat, lon), point(lat, lon)) && '(??, ??), (??, ??)'::box";
 
 const SitesService = {
   // TODO -- do something about the seam at +/-180 degrees longitude
