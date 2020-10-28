@@ -1,26 +1,59 @@
-# Express Boilerplate!
+# DonationHub
 
-This is a boilerplate project used for starting new projects!
+</br>
 
-## Set up
+Thank you for visinting DonationHub, a collaborative project created by John Adney,
+Julia Bugayev, Angela Thomas, and Kayleigh Young!
+</br>
+If you would like to view the DonationHub website, follow this link:
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+# https://donation-hub-client.vercel.app
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+and the DonationHub repository here:
 
-## Scripts
+# https://cryptic-fjord-37790.herokuapp.com/
 
-Start the application `npm start`
+If you would like to view the API for this website, you can find the deployed version here:
 
-Start nodemon for the application `npm run dev`
+# https://cryptic-fjord-37790.herokuapp.com/
 
-Run the tests `npm test`
+and the repository for the API here:
 
-## Deploying
+# https://github.com/jbugayev18/DonationHub-API
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
+</br>
+
+# Summary
+
+In most scenarios, people are willing to donate. However, it is not always clear what organizations
+really need or how much of what they are seeking is needed. In order to help strengthen the donation
+process, we decided to create Donation Hub. DonationHub exists as a way to centralize the efforts community
+champions (donators) need in order to best serve their communities. By using the DonationHub website, users
+are able to locate organization near them, browse items that location needs, and give as they please accoringly.
+Users are also able to go in and add donaiton sites for organizations that may not be as internet acceisble.
+In order to ensure the app works to its fullest potential, the following technology was used in its creation:
+
+# Frontend:
+
+    ReactJS
+    CSS
+    Jest
+    JWT
+
+# Backend:
+
+    ExpressJS
+    Bcryptjs
+    Mocha/Chai
+    Postgres
+        GIST Index for performant box intersection query
+
+# Third Party APIs:
+
+    Google Maps
+    Google Places
+
+# Deployment:
+
+    Vercel
+    Heroku
