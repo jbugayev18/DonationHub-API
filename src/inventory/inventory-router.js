@@ -9,17 +9,37 @@ inventoryRouter.route("/").get((req, res, next) => {
   });
 });
 
-inventoryRouter.route("/:id").get(async (req, res) => {
-  const { id } = req.params;
-  console.log(id);
+inventoryRouter.route("/:site_id").get(async (req, res) => {
+  const { site_id } = req.params;
+  console.log(site_id);
   const items = await InventoryService.getAllItemsFromSiteId(
     req.app.get("db"),
-    id
+    site_id
   );
   console.log(items);
   res.json(items);
+});
 
-  res.send(req.params);
+inventoryRouter.route("/:site_id/items/:item_id").get(async (req, res) => {
+  const { site_id, item_id } = req.params;
+  const item = await InventoryService.getItemById(
+    req.app.get("db"),
+    site_id,
+    item_id
+  );
+  console.log(item);
+  res.json(item);
+});
+
+inventoryRouter.route("/:site_id/items/:item_id").delete(async (req, res) => {
+  //Remove item from site. This should only be done from the administrator
+  const { site_id, item_id } = req.params;
+  const item = await InventoryService.deleteItemById(
+    req.app.get("db"),
+    site_id,
+    item_id
+  );
+  res.json(item);
 });
 
 module.exports = inventoryRouter;
