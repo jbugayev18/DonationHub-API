@@ -4,7 +4,7 @@ const app = require("./app");
 
 const { PORT, DATABASE_URL } = require("./config");
 
-app.get('/api/*', (req, res) => {
+app.get('/api', (req, res) => {
   res.json({ok: true}); 
 })
 
