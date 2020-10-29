@@ -26,6 +26,18 @@ const InventoryService = {
     });
   },
 
+  //Add Item to Update Item Quantity
+  updateItemQuantity(db, site_id, item_id, new_amount) {
+    return db
+      .from("inventory")
+      .where({
+        site_id: site_id,
+        id: item_id,
+      })
+      .update({ current_amount: new_amount });
+  },
+
+  //Delete an Item by Id
   deleteItemById(db, site_id, item_id) {
     return db
       .from("inventory")

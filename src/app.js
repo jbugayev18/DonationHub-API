@@ -10,13 +10,14 @@ const siteRouter = require("./site/site-router");
 const inventoryRouter = require("./inventory/inventory-router");
 const testRouter = require("./site/testRouter");
 const app = express();
-const placesRouter = require('./places/places-router')
+// const placesRouter = require('./places/places-router')
 
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";
 
 app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Hello, world!");
@@ -39,6 +40,6 @@ app.use(function errorHandler(error, req, res, next) {
 
 app.use("/api/auth", authRouter);
 app.use("/api/registration", userRouter);
-app.use("/api/places", placesRouter)
+// app.use("/api/places", placesRouter)
 
 module.exports = app;
