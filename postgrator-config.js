@@ -10,5 +10,5 @@ if (!connectionString || !connectionString.startsWith("postgres"))
 module.exports = {
   migrationDirectory: "db.schema",
   driver: "pg",
-  connectionString: process.env.DB_URL,
+  connectionString,
 };
