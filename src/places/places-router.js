@@ -1,9 +1,9 @@
-const express = require("express");
-const json = require("body-parser").json();
+const express = require('express');
+const json = require('body-parser').json();
 const placesRouter = express.Router();
-const fetch = require("node-fetch");
+const fetch = require('node-fetch');
 
-const SitesService = require("../site/site-service");
+const SitesService = require('../site/site-service');
 
 // placesRouter.get("/sites", (req, res) => {
 //   //Return all sites
@@ -12,11 +12,11 @@ const SitesService = require("../site/site-service");
 //   });
 // });
 
-placesRouter.post("/", json, (req, res) => {
+placesRouter.post('/', json, (req, res) => {
   console.log(req.body.place);
-  const db = req.app.get("db");
+  const db = req.app.get('db');
   const address = req.body.place;
-  const apikey = "AIzaSyBK3kzRSslMgvDZsvdsODC2Bid0uDMdpLg";
+  const apikey = 'AIzaSyBK3kzRSslMgvDZsvdsODC2Bid0uDMdpLg';
   const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=donations&location=${address}&radius=10000&key=${apikey}`;
   fetch(url)
     .then((response) => response.json())
@@ -26,9 +26,9 @@ placesRouter.post("/", json, (req, res) => {
           id: site.place_id,
           lat: site.geometry.location.lat,
           lon: site.geometry.location.lng,
-          label: site.name || "default label",
+          label: site.name || 'default label',
           address: site.formatted_address,
-          description: site.name || "default description",
+          description: site.name || 'default description',
         };
         SitesService.postSitesInWindow(db, newSite).then((data) =>
           console.log(data)
@@ -44,7 +44,7 @@ placesRouter.post("/", json, (req, res) => {
   //     })
   //   )
 
-  res.json("received");
+  res.json('received');
 });
 
 module.exports = placesRouter;
