@@ -53,6 +53,24 @@ inventoryRouter.route("/:site_id/items/:item_id").put(async (req, res) => {
 
 //POST an item into the inventory
 
+inventoryRouter.route("/:site_id/items").post(async (req, res) => {
+  const { site_id } = req.params;
+  //user puts the name of the item
+  const { new_item } = req.body;
+
+  const item = await InventoryService.addNewItem(
+    req.app.get("db"),
+    new_item.item_name,
+    new_item.amount,
+    new_item.ideal_amount,
+    new_item.critical_amount,
+    new_item.site_id,
+    site_id
+  );
+  console.log(item);
+  res.json(item);
+});
+
 inventoryRouter.route("/:site_id/items/:item_id").delete(async (req, res) => {
   //Remove item from site. This should only be done from the administrator
   const { site_id, item_id } = req.params;
