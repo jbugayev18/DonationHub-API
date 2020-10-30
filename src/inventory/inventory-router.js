@@ -62,9 +62,9 @@ inventoryRouter.route("/:site_id/items").post(async (req, res) => {
     req.app.get("db"),
     new_item.item_name,
     new_item.amount,
+    new_item.site_id,
     new_item.ideal_amount,
     new_item.critical_amount,
-    new_item.site_id,
     site_id
   );
   console.log(item);
