@@ -16,15 +16,15 @@ siteRouter.get("/", async (req, res, next) => {
 siteRouter.use(requireAuth).route("/")
 .post(jsonParser,async (req, res, next) => {
   const db = req.app.get('db');
-  const {address, description, label, lat, lon, place_id} = req.body;
-  let newSite = { address, description, label, lat, lon, place_id};
+  const {lat, lon,label, address, description, place_id} = req.body;
+  let newSite = {  lat, lon,label, address, description, place_id };
   
   for (const [key, value] of Object.entries(newSite)){
     if(value === null){
       return next({status: 400, message: `Missing '${key}' in request body`});
     }
   }
-  newSite = sanitizeFields(newSite);
+   newSite = sanitizeFields(newSite);
   try {
     const sites = await SitesService.postSite(db, newSite);
     res
