@@ -20,7 +20,8 @@ create table "site" (
   "lon" float not null,
   "label" text not null,
   "address" text not null,
-  "description" text not null
+  "description" text not null,
+  "place_id" text
 );
 
 /* postgres-specific optimized box query */

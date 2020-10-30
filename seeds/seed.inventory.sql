@@ -1,3 +1,7 @@
+begin;
+
+truncate inventory cascade;
+
 INSERT INTO inventory (id, item_name, site_id, ideal_amount, current_amount, critical_amount) VALUES
     ('1', 'Toothpaste', '1', '50', '10', '30'),
     ('2', 'Gloves', '1', '30', '5', '20'),
