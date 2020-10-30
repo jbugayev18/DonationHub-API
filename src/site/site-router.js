@@ -4,15 +4,24 @@ const siteRouter = express.Router();
 const SitesService = require("./site-service");
 const {sanitizeFields} = require('../utils');
 const jsonParser = express.json();
+const xss = require('xss')
 
-
+const serializeSites = sites => ({
+  id: sites.id,
+  lat: sites.lat,
+  lon: sites.lon,
+  label: xss(sites.label),
+  address: xss(sites.address),
+  description: xss(sites.description),
+  place_id: xss(sites.place_id)
+})
 siteRouter.get("/", async (req, res, next) => {
     try {
       return res.json(await SitesService.getSitesInWindow(req.app.get("db"), ...String(req.query.rect).split(',',4)));
     } catch(err) {
       next(err);
     }
-  });
+});
 
 siteRouter.use(requireAuth).route("/")
   .post(jsonParser,async (req, res, next) => {
@@ -33,7 +42,21 @@ siteRouter.use(requireAuth).route("/")
     } catch (err) {
       next(err);
     }
-    //return res.status(500).send();
   });
+
+siteRouter.route('/:site_id')
+  .get((req,res,next)=>{
+    SitesService.findById(req.app.get('db'), req.params)
+      .then(site => {
+        if (!site) {
+          return res.status(404).json({
+            error: { message: `No donation sites found by id -${req.params.id}`}
+          });
+        }
+        res.site = site;
+        next();
+      })
+      .catch(next);
+  })
 
 module.exports = siteRouter;
