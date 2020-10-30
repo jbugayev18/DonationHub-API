@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require("express");
 const { requireAuth } = require('../middleware/jwt-auth');
 const siteRouter = express.Router();
@@ -29,6 +30,7 @@ siteRouter.use(requireAuth).route("/")
       const sites = await SitesService.postSite(db, newSite);
       res
         .status(201)
+        .location(path.posix.join(req.originalUrl, `/:${sites.id}`))
         .json(sites);
     } catch (err) {
       next(err);
