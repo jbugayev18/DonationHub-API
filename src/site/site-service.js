@@ -18,6 +18,12 @@ const SitesService = {
       .returning('*')
       .then(([site]) => site);
   },
+  findById(db,site_id){
+    return db
+      .from('site')
+      .select('*')
+      .where('id', '=', site_id);
+  }
 };
 
 module.exports = SitesService;
