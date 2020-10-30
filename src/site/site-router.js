@@ -2,6 +2,8 @@ const express = require("express");
 const { requireAuth } = require('../middleware/jwt-auth');
 const siteRouter = express.Router();
 const SitesService = require("./site-service");
+const {sanitizeFields} = require('../utils');
+const jsonParser = express.json();
 
 siteRouter.get("/", async (req, res, next) => {
   try {
@@ -11,8 +13,27 @@ siteRouter.get("/", async (req, res, next) => {
   }
 });
 
-siteRouter.post("/", requireAuth, (req, res) => {
-  //SitesService.postSite(req.app.get("db"), site);
+siteRouter.use(requireAuth).route("/")
+  .post(async (req, res, next) => {
+  const db = req.app.get('db');
+  const {address, description, label, lat, lon, place_id} = req.body;
+  let newSite = { lat, lon, label, address, description, place_id};
+
+  for (const [key, value] of Object.entries(newSite)){
+    if(value === null && key !== place_id){
+      return next({status: 400, message: `Missing '${key}' in request body`});
+    }
+  }
+  newSite = sanitizeFields(newSite);
+  try {
+    const sites = await SitesService.postSite(db, newSite);
+    res
+      .status(201)
+      .location(path.posix.join(req.originalUrl, `/:${sites.id}`))
+      .json(sites);
+  } catch (err) {
+    next(err);
+  }
   return res.status(500).send();
 });
 
