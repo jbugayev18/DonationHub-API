@@ -26,6 +26,36 @@ const InventoryService = {
     });
   },
 
+  //Add Item to Update Item Quantity
+  updateItemQuantity(db, site_id, item_id, new_amount) {
+    return db
+      .from("inventory")
+      .where({
+        site_id: site_id,
+        id: item_id,
+      })
+      .update({ current_amount: new_amount });
+  },
+
+  //Add New Item into Inventory
+
+  addNewItem(db, new_item, amount, site_id, ideal_amount, critical_amount) {
+    return db
+      .insert({
+        item_name: new_item,
+        current_amount: amount,
+        site_id: site_id,
+        ideal_amount: ideal_amount,
+        critical_amount: critical_amount,
+      })
+      .into("inventory")
+      .returning(["*"])
+      .then((rows) => {
+        return rows[0];
+      });
+  },
+
+  //Delete an Item by Id
   deleteItemById(db, site_id, item_id) {
     return db
       .from('inventory')
