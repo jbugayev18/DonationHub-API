@@ -14,13 +14,13 @@ siteRouter.get("/", async (req, res, next) => {
 });
 
 siteRouter.use(requireAuth).route("/")
-  .post(async (req, res, next) => {
+.post(jsonParser,async (req, res, next) => {
   const db = req.app.get('db');
   const {address, description, label, lat, lon, place_id} = req.body;
-  let newSite = { lat, lon, label, address, description, place_id};
-
+  let newSite = { address, description, label, lat, lon, place_id};
+  
   for (const [key, value] of Object.entries(newSite)){
-    if(value === null && key !== place_id){
+    if(value === null){
       return next({status: 400, message: `Missing '${key}' in request body`});
     }
   }
@@ -29,12 +29,11 @@ siteRouter.use(requireAuth).route("/")
     const sites = await SitesService.postSite(db, newSite);
     res
       .status(201)
-      .location(path.posix.join(req.originalUrl, `/:${sites.id}`))
       .json(sites);
   } catch (err) {
     next(err);
   }
-  return res.status(500).send();
+  //return res.status(500).send();
 });
 
 module.exports = siteRouter;
