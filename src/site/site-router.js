@@ -18,8 +18,8 @@ siteRouter.get("/", async (req, res, next) => {
 siteRouter.use(requireAuth).route("/")
   .post(jsonParser,async (req, res, next) => {
     const db = req.app.get('db');
-    const {lat, lon,label, address, description, place_id} = req.body;
-    let newSite = {  lat, lon,label, address, description, place_id };
+    const {lat, lon,label, address, description, formatted_phone_number, place_id, url, website} = req.body;
+    let newSite = {  lat, lon,label, address, description, formatted_phone_number, place_id, url, website };
     for (const [key, value] of Object.entries(newSite)){
       if(value === null){
         return next({status: 400, message: `Missing '${key}' in request body`});

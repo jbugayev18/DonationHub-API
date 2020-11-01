@@ -21,7 +21,11 @@ create table "site" (
   "label" text not null,
   "address" text not null,
   "description" text not null,
-  "place_id" text
+  "formatted_phone_number" text,
+  "place_id" text,
+  "url" text,
+  "website" text
+
 );
 
 /* postgres-specific optimized box query */
