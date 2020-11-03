@@ -18,6 +18,12 @@ const SitesService = {
       .returning('*')
       .then(([site]) => site);
   },
+  hasSiteWithPlaceId(db, place_id) {
+    return db('site')
+      .where({ place_id })
+      .first()
+      .then((site) => !!site);
+  },
 };
 
 module.exports = SitesService;
