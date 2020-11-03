@@ -1,6 +1,6 @@
 const express = require("express");
 const InventoryService = require("./inventory-service");
-
+const {sanitizeFields} = require('../utils');
 const inventoryRouter = express.Router();
 
 inventoryRouter.route("/").get((req, res, next) => {
@@ -53,22 +53,22 @@ inventoryRouter.route("/:site_id/items/:item_id").put(async (req, res) => {
 
 //POST an item into the inventory
 
-inventoryRouter.route("/:site_id/items").post(async (req, res) => {
-  const { site_id } = req.params;
-  //user puts the name of the item
-  const { new_item } = req.body;
-
-  const item = await InventoryService.addNewItem(
-    req.app.get("db"),
-    new_item.item_name,
-    new_item.amount,
-    new_item.site_id,
-    new_item.ideal_amount,
-    new_item.critical_amount,
-    site_id
-  );
-  console.log(item);
-  res.json(item);
+inventoryRouter.route("/:site_id/items").post(async (req, res, next) => {
+  const db = req.app.get("db");
+  const {item_name,critical_amount,site_id } = req.body;
+  let new_item = {item_name,critical_amount,site_id };
+  new_item = sanitizeFields(new_item);
+  try{
+    const item = await InventoryService.addNewItem(
+      db,
+      new_item
+    ); 
+    res
+      .status(201)
+      .json(item);
+  } catch (err){
+    next(err);
+  }
 });
 
 inventoryRouter.route("/:site_id/items/:item_id").delete(async (req, res) => {
