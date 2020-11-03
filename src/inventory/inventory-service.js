@@ -29,7 +29,7 @@ const InventoryService = {
   //Add Item to Update Item Quantity
   updateItemQuantity(db, site_id, item_id, new_amount) {
     return db
-      .from("inventory")
+      .from('inventory')
       .where({
         site_id: site_id,
         id: item_id,
@@ -38,18 +38,12 @@ const InventoryService = {
   },
 
   //Add New Item into Inventory
-
-  addNewItem(db, new_item, amount, site_id, ideal_amount, critical_amount) {
+  
+  addNewItem(db, new_item) {
     return db
-      .insert({
-        item_name: new_item,
-        current_amount: amount,
-        site_id: site_id,
-        ideal_amount: ideal_amount,
-        critical_amount: critical_amount,
-      })
-      .into("inventory")
-      .returning(["*"])
+      .insert(new_item)
+      .into('inventory')
+      .returning(['*'])
       .then((rows) => {
         return rows[0];
       });
