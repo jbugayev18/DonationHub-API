@@ -27,11 +27,19 @@ siteRouter.use(requireAuth).route("/")
     }
     newSite = sanitizeFields(newSite);
     try {
-      const sites = await SitesService.postSite(db, newSite);
+      const hasSiteWithPlaceId = await SitesService.hasSiteWithPlaceId(
+        req.app.get("db"),
+        place_id
+        )
+        if(hasSiteWithPlaceId)
+        return res.status(400).json({error:`We already have records of this location, duplicate entries are not allowed.`});
+      const site = await SitesService.postSite(db, newSite);
       res
-        .status(201)
-        .location(path.posix.join(req.originalUrl, `/:${sites.id}`))
-        .json(sites);
+      .status(201)
+      .location(path.posix.join(req.originalUrl, `/:${site.id}`))
+      .json(site)
+      return (site.id)
+
     } catch (err) {
       next(err);
     }

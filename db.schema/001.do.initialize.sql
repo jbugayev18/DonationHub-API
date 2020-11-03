@@ -22,7 +22,7 @@ create table "site" (
   "address" text not null,
   "description" text not null,
   "formatted_phone_number" text,
-  "place_id" text,
+  "place_id" text unique,
   "url" text,
   "website" text
 
