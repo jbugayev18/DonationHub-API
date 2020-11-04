@@ -38,7 +38,14 @@ const InventoryService = {
   },
 
   //Add New Item into Inventory
-  
+  findSiteId(db, place_id){
+    return db
+      .select('id')
+      .from('site')
+      .where({
+        place_id: place_id
+      });
+  },
   addNewItem(db, new_item) {
     return db
       .insert(new_item)
