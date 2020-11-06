@@ -11,7 +11,7 @@ If you would like to view the DonationHub website, follow this link:
 
 and the DonationHub repository here:
 
-# https://cryptic-fjord-37790.herokuapp.com/
+# https://github.com/kayleighkat98/donation-hub-client
 
 If you would like to view the API for this website, you can find the deployed version here:
 
@@ -29,8 +29,8 @@ In most scenarios, people are willing to donate. However, it is not always clear
 really need or how much of what they are seeking is needed. In order to help strengthen the donation
 process, we decided to create Donation Hub. DonationHub exists as a way to centralize the efforts community
 champions (donators) need in order to best serve their communities. By using the DonationHub website, users
-are able to locate organization near them, browse items that location needs, and give as they please accoringly.
-Users are also able to go in and add donaiton sites for organizations that may not be as internet acceisble.
+are able to locate organization near them, browse items that location needs, and give as they please accordingly.
+Users are also able to go in and add donation sites for organizations that may not be as internet accesible.
 In order to ensure the app works to its fullest potential, the following technology was used in its creation:
 
 # Frontend:
