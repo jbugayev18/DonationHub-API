@@ -1,4 +1,4 @@
-# DonationHub
+ DonationHub
 
 </br>
 
@@ -57,3 +57,189 @@ In order to ensure the app works to its fullest potential, the following technol
 
     Vercel
     Heroku
+
+# App Endpoints: 
+    Authenticate User
+
+        URL:
+            /token
+
+        Methond:
+            POST
+
+        URL Params:
+            Required
+            id=[interger]
+
+        Data Params:
+             Password/Web Token
+
+        Success Response:
+            Code: 200
+            Contnet: {id:"2" username:"user" password:"pass"}
+
+        Error Response: 
+            Code: 400
+            Content: {`Missing '${key} in request body`}
+        OR
+            Code: 400
+            Content: {"Incorrect username or password"}
+        
+        Sample Call 
+            $.ajax({
+                url:"token/1",
+                dataType: "json",
+                type: "POST",
+                success: function(r) {
+                    console.log(r)
+                }
+            })
+
+
+Inventory
+
+        URL:
+            /:site_id
+
+        Methond:
+            GET
+
+        URL Params:
+            siteId=[interger],
+            items=[text]
+
+        Data Params:
+             None
+
+        Success Response:
+            Code: 201
+            Contnet: {siteId:"2" item:"socks"}
+
+        Error Response: 
+            Code: 400
+            Content: {succes:fail}
+        
+        Sample Call 
+            $.ajax({
+                url:":siteId/2",
+                dataType: "json",
+                type: "GET",
+                success: true {
+                    console.log(success)
+                }
+            })
+
+Places
+
+        URL:
+            /places/
+
+        Methond:
+            POST
+
+        URL Params:
+            site=[placeId],
+            
+
+        Data Params:
+             lat,
+             lon,
+             label,
+             address,
+             description,
+
+        Success Response:
+           None
+        Error Response: 
+            None
+        
+        Sample Call 
+            $.ajax({
+                url:"/places/",
+                dataType: "json",
+                type: "GET"
+            })
+
+Registration
+
+        URL:
+            /registration/
+
+        Methond:
+            POST
+
+        URL Params:
+            Required
+            id=[interger],
+            password=[text],
+            username=[text],
+            label=[text]
+
+        Data Params:
+             None
+
+        Success Response:
+            Code: 201
+            Contnet: {}
+
+        Error Response: 
+            Code: 400
+            Content: {`Username is already taken`}
+        OR
+            Code: 400
+            Conent: {`passwordError`}
+        OR
+            Code: 400
+            Content: {`Missing '${field}' in request body`}
+        
+        Sample Call 
+            $.ajax({
+                url:"/regitration/",
+                dataType: "json",
+                type: "POST",
+                success: function(r) {
+                    console.log(r)
+                }
+            })
+
+SiteRouter
+
+        URL:
+            /siteRouter/
+
+        Methond:
+            POST
+
+        URL Params:
+            Required
+            id=[interger],
+            
+
+        Data Params:
+             lat,
+             lon,
+             label,
+             address,
+             description,
+             forrmatted_phone_number,
+             palce_id,
+             url,
+             website
+
+        Success Response:
+           None
+
+        Error Response: 
+            Code: 400
+            Content: {`We already have records of this location, duplicatres are not allowed.`}
+        OR
+            Code: 400
+            Content: {`Missing '${field}' in request body`}
+        
+        Sample Call 
+            $.ajax({
+                url:"/regitration/",
+                dataType: "json",
+                type: "POST",
+                }
+            })
