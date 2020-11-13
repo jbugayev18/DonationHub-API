@@ -21,7 +21,6 @@ describe("sites endpoint", function () {
     app.set("db", db);
   });
 
-
   after("disconnect from db", () => db.destroy());
 
   before("cleanup", () => helpers.cleanTables(db));

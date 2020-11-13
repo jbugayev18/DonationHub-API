@@ -5,32 +5,33 @@ const Promise = require("bluebird");
 function makeUsersArray() {
   return [
     {
-      id: 99999,
+      id: 1,
       username: "julia",
-      password: "jbuga",
+      label: "julia",
+      // password: "jbuga",
     },
-    // {
-    //   id: 2,
-    //   username: "test-user-2",
-    //   password: "password",
-    // },
-    // {
-    //   id: 3,
-    //   username: "test-user-3",
-    //   password: "password",
-    // },
-    // {
-    //   id: 4,
-    //   username: "test-user-4",
-    //   password: "password",
-    // },
+    {
+      id: 2,
+      username: "test-user-2",
+      label: "password",
+    },
+    {
+      id: 3,
+      username: "test-user-3",
+      label: "password",
+    },
+    {
+      id: 4,
+      username: "test-user-4",
+      label: "password",
+    },
   ];
 }
 
 function makeSitesArray() {
   return [
     {
-      id: "1",
+      id: 1,
       lat: "34.045010",
       lon: "-118.245171",
       label: "Los Angeles Mission",
@@ -43,39 +44,39 @@ function makeSitesArray() {
         "https://maps.google.com/?q=303+E+5th+St,+Los+Angeles,+CA+90013,+USA&ftid=0x80c2c6365ceb594b:0x10875c103ce05039",
       website: "No website on file.",
     },
-    // {
-    //   id: 2,
-    //   lat: 21,
-    //   lon: 21,
-    //   label: "Donation Shelter As Well",
-    //   address: "2222 Donation Drive",
-    //   description: "A donation location as well",
-    //   formatted_phone_number: "123-456-7891",
-    //   place_id: "Ldifnsadfaopferin",
-    //   url: "https://donateplease.com",
-    //   website: "donateplease.com",
-    // },
+    {
+      id: 2,
+      lat: 21,
+      lon: 21,
+      label: "Donation Shelter As Well",
+      address: "2222 Donation Drive",
+      description: "A donation location as well",
+      formatted_phone_number: "123-456-7891",
+      place_id: "Ldifnsadfaopferin",
+      url: "https://donateplease.com",
+      website: "donateplease.com",
+    },
   ];
 }
 
 function makeInventoryArray() {
   return [
     {
-      id: "1",
+      id: 1,
       item_name: "Toothpaste",
-      site_id: "1",
-      ideal_amount: "50",
-      current_amount: "10",
-      critical_amount: "30",
+      site_id: 1,
+      ideal_amount: 50,
+      current_amount: 10,
+      critical_amount: 30,
     },
-    // {
-    //   id: 2,
-    //   item_name: "socks",
-    //   site_id: 2,
-    //   ideal_amount: "22",
-    //   current_amount: "7",
-    //   critical_amount: "15",
-    // },
+    {
+      id: 2,
+      item_name: "socks",
+      site_id: 2,
+      ideal_amount: 22,
+      current_amount: 7,
+      critical_amount: 15,
+    },
   ];
 }
 
@@ -92,9 +93,9 @@ function makeRegistrationArray() {
 function makeDonationFixtures() {
   const testUsers = makeUsersArray();
   const testSites = makeSitesArray();
-  const testinventory = makeInventoryArray();
+  const testInventory = makeInventoryArray();
   const testRegistration = makeRegistrationArray();
-  return { testUsers, testSites, testinventory };
+  return { testUsers, testSites, testInventory };
 }
 
 function makeMaliciousThing(user) {
@@ -124,35 +125,36 @@ function truncate(tables, db) {
 }
 
 function cleanTables(db) {
-  const tables = ["inventory", "site", "user"];
-  return db.transaction((trx) =>
-    truncate(tables, db).then(() =>
-      Promise.all([
-        trx.raw(`ALTER TABLE "user" AUTO_INCREMENT = 100000`),
-        trx.raw(`ALTER SEQUENCE registration_id_seq minvalue 0 START WITH 1`),
-        trx.raw(`ALTER SEQUENCE places_id_seq minvalue 0 START WITH 1`),
-        trx.raw(`ALTER SEQUENCE inventory_id_seq minvalue 0 START WITH 1`),
-        trx.raw(`ALTER SEQUENCE sites_id_seq minvalue 0 START WITH 1`),
-        trx.raw(`SELECT setval('user_id_seq', 0)`),
-        trx.raw(`SELECT setval('registration_id_seq', 0)`),
-        trx.raw(`SELECT setval('places_id_seq', 0)`),
-        trx.raw(`SELECT setval('inventory_id_seq', 0)`),
-        trx.raw(`SELECT setval('sites_id_seq', 0)`),
-      ])
-    )
+  const tables = ["past_donations", "inventory", "site", "user"];
+  return db.transaction(
+    (trx) => truncate(tables, db)
+    // .then(() =>
+    //   Promise.all([
+    //     trx.raw(`ALTER TABLE "user" AUTO_INCREMENT = 100000`),
+    //     trx.raw(`ALTER SEQUENCE registration_id_seq minvalue 0 START WITH 1`),
+    //     trx.raw(`ALTER SEQUENCE places_id_seq minvalue 0 START WITH 1`),
+    //     trx.raw(`ALTER SEQUENCE inventory_id_seq minvalue 0 START WITH 1`),
+    //     trx.raw(`ALTER SEQUENCE sites_id_seq minvalue 0 START WITH 1`),
+    //     trx.raw(`SELECT setval('user_id_seq', 0)`),
+    //     trx.raw(`SELECT setval('registration_id_seq', 0)`),
+    //     trx.raw(`SELECT setval('places_id_seq', 0)`),
+    //     trx.raw(`SELECT setval('inventory_id_seq', 0)`),
+    //     trx.raw(`SELECT setval('sites_id_seq', 0)`),
+    //   ])
+    // )
   );
 }
 
 function seedUser(db, user) {
-  const preppedUser = user.map((user) => ({
+  const preppedUsers = user.map((user) => ({
     ...user,
-    password: bcrypt.hashSync(user.password, 1),
+    // password: bcrypt.hashSync(user.password, 1),
   }));
   return db
     .into("user")
     .insert(preppedUsers)
     .then(() =>
-      db.raw(`SELECT setval('user_id_seq', ?)`, [users[users.length - 1].id])
+      db.raw(`SELECT setval('user_id_seq', ?)`, [user[user.length - 1].id])
     );
 }
 
@@ -171,11 +173,11 @@ function seedSites(db, testSites) {
     ...sites,
   }));
   return db
-    .into("sites")
+    .into("site")
     .insert(preppedSites)
     .then(() =>
       // update the auto sequence to stay in sync
-      db.raw(`SELECT setval('sites_id_seq', ?)`, [
+      db.raw(`SELECT setval('site_id_seq', ?)`, [
         testSites[testSites.length - 1].id,
       ])
     );
@@ -185,11 +187,11 @@ function seedInventory(db, testInventory) {
   const inventoryItems = testInventory.map((inventory) => ({
     ...inventory,
   }));
-  return db.cleanTables
+  return db
     .into("inventory")
     .insert(inventoryItems)
     .then(() =>
-      db.raw(`SELECT setval('inventory_id_seq, ?)`, [
+      db.raw(`SELECT setval('inventory_id_seq', ?)`, [
         testInventory[testInventory.length - 1].id,
       ])
     );
@@ -214,6 +216,7 @@ function seedMaliciousSite(db, user) {
 }
 
 function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
+  console.log(secret, "blablablablabla");
   const token = jwt.sign({ user_id: user.id }, secret, {
     subject: user.username,
     algorithm: "HS256",
