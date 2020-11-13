@@ -1,1 +1,1 @@
-drop table if exists "past_donations"; 
+drop table if exists "past_donations" ; 
