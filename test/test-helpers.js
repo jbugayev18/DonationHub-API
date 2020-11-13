@@ -5,75 +5,77 @@ const Promise = require("bluebird");
 function makeUsersArray() {
   return [
     {
-      id: 1,
-      username: "test-user-1",
-      password: "password",
+      id: 99999,
+      username: "julia",
+      password: "jbuga",
     },
-    {
-      id: 2,
-      username: "test-user-2",
-      password: "password",
-    },
-    {
-      id: 3,
-      username: "test-user-3",
-      password: "password",
-    },
-    {
-      id: 4,
-      username: "test-user-4",
-      password: "password",
-    },
+    // {
+    //   id: 2,
+    //   username: "test-user-2",
+    //   password: "password",
+    // },
+    // {
+    //   id: 3,
+    //   username: "test-user-3",
+    //   password: "password",
+    // },
+    // {
+    //   id: 4,
+    //   username: "test-user-4",
+    //   password: "password",
+    // },
   ];
 }
 
 function makeSitesArray() {
   return [
     {
-      id: 2,
-      lat: 20,
-      lon: 20,
-      label: "Donation Shelter",
-      address: "1111 Donation Drive",
-      description: "A donation location",
-      formatted_phone_number: "123-456-7890",
-      place_id: "Ldifnaopferin",
-      url: "https://donate.com",
-      website: "donate.com",
+      id: "1",
+      lat: "34.045010",
+      lon: "-118.245171",
+      label: "Los Angeles Mission",
+      address: "303 E 5th St, Los Angeles, CA 90013, USA",
+      description:
+        "Provide food, clothing, and shelter to those who are homeless or in jeopardy of becoming homeless in downtown LA ",
+      formatted_phone_number: "No phone number on file",
+      place_id: "ChIJS1nrXDbGwoAROVDgPBBchxA",
+      url:
+        "https://maps.google.com/?q=303+E+5th+St,+Los+Angeles,+CA+90013,+USA&ftid=0x80c2c6365ceb594b:0x10875c103ce05039",
+      website: "No website on file.",
     },
-    {
-      id: 3,
-      lat: 21,
-      lon: 21,
-      label: "Donation Shelter As Well",
-      address: "2222 Donation Drive",
-      description: "A donation location as well",
-      formatted_phone_number: "123-456-7891",
-      place_id: "Ldifnsadfaopferin",
-      url: "https://donateplease.com",
-      website: "donateplease.com",
-    },
+    // {
+    //   id: 2,
+    //   lat: 21,
+    //   lon: 21,
+    //   label: "Donation Shelter As Well",
+    //   address: "2222 Donation Drive",
+    //   description: "A donation location as well",
+    //   formatted_phone_number: "123-456-7891",
+    //   place_id: "Ldifnsadfaopferin",
+    //   url: "https://donateplease.com",
+    //   website: "donateplease.com",
+    // },
   ];
 }
 
 function makeInventoryArray() {
   return [
     {
-      id: 3,
-      item_name: "socks",
-      site_id: 3,
-      ideal_amount: "22",
-      current_amount: "7",
-      critical_amount: "15",
+      id: "1",
+      item_name: "Toothpaste",
+      site_id: "1",
+      ideal_amount: "50",
+      current_amount: "10",
+      critical_amount: "30",
     },
-    {
-      id: 4,
-      item_name: "socks",
-      site_id: 3,
-      ideal_amount: "22",
-      current_amount: "7",
-      critical_amount: "15",
-    },
+    // {
+    //   id: 2,
+    //   item_name: "socks",
+    //   site_id: 2,
+    //   ideal_amount: "22",
+    //   current_amount: "7",
+    //   critical_amount: "15",
+    // },
   ];
 }
 
