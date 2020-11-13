@@ -7,7 +7,11 @@ const { markAsUntransferable, isMainThread } = require("worker_threads");
 describe("sites endpoint", function () {
   let db;
 
-  const { testUsers, testSites, testRegistration } = helpers.makeDonationFixtures;
+  const {
+    testUsers,
+    testSites,
+    testRegistration,
+  } = helpers.makeDonationFixtures;
 
   before("make knex instance", () => {
     db = knex({
@@ -17,8 +21,7 @@ describe("sites endpoint", function () {
     app.set("db", db);
   });
 
-  const {testUsers} = helpers.makeDonationFixtures
-
+  // const {testUsers} = helpers.makeDonationFixtures
 
   after("disconnect from db", () => db.destroy());
 
