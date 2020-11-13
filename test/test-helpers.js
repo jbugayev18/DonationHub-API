@@ -79,11 +79,21 @@ function makeInventoryArray() {
   ];
 }
 
+function makeRegistrationArray() {
+  return [
+    {
+      label: "julia",
+      username: "jbuga",
+      password: "$2a$12$N4YI0.E/hwLRIopewykhAOvLVZ/zfCFWA5w1pYcKem09i1VFPCHR2",
+    },
+  ];
+}
+
 function makeDonationFixtures() {
   const testUsers = makeUsersArray();
   const testSites = makeSitesArray();
   const testinventory = makeInventoryArray();
-  // const testRegistration= makeRegistrationArray()
+  const testRegistration = makeRegistrationArray();
   return { testUsers, testSites, testinventory };
 }
 
@@ -179,10 +189,10 @@ function seedInventory(db, testInventory) {
     .into("inventory")
     .insert(inventoryItems)
     .then(() =>
-    db.raw(`SELECT setval('inventory_id_seq, ?)` , [
-      testInventory[testInventory.length - 1].id,
-    ])
-  )
+      db.raw(`SELECT setval('inventory_id_seq, ?)`, [
+        testInventory[testInventory.length - 1].id,
+      ])
+    );
 }
 
 function seedPlaces(db, testPlaces) {
@@ -190,13 +200,13 @@ function seedPlaces(db, testPlaces) {
     ...places,
   }));
   return db.cleanTables
-  .into("places")
-  .insert(newPlaces)
-  .then(() =>
-  db.raw(`SELECT setval('places_id_seq, ?)`, [
-    testPlaces[testPlaces.length -1].id,
-  ])
-  )
+    .into("places")
+    .insert(newPlaces)
+    .then(() =>
+      db.raw(`SELECT setval('places_id_seq, ?)`, [
+        testPlaces[testPlaces.length - 1].id,
+      ])
+    );
 }
 
 function seedMaliciousSite(db, user) {

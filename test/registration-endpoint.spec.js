@@ -11,7 +11,7 @@ describe("sites endpoint", function () {
     testUsers,
     testSites,
     testRegistration,
-  } = helpers.makeDonationFixtures;
+  } = helpers.makeDonationFixtures();
 
   before("make knex instance", () => {
     db = knex({
@@ -21,7 +21,6 @@ describe("sites endpoint", function () {
     app.set("db", db);
   });
 
-  // const {testUsers} = helpers.makeDonationFixtures
 
   after("disconnect from db", () => db.destroy());
 
@@ -29,7 +28,7 @@ describe("sites endpoint", function () {
 
   afterEach("cleanup", () => helpers.cleanTables(db));
 
-  describe.skip(`POST /api/sites`, () => {
+  describe(`POST /api/sites`, () => {
     beforeEach("insert users", () => helpers.seedUser(db, testUsers));
 
     it(`Unauthorized user receives 401 response`, () => {
