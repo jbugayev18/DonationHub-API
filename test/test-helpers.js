@@ -185,6 +185,20 @@ function seedInventory(db, testInventory) {
   )
 }
 
+function seedPlaces(db, testPlaces) {
+  const newPlaces = testPlaces.map((places) => ({
+    ...places,
+  }));
+  return db.cleanTables
+  .into("places")
+  .insert(newPlaces)
+  .then(() =>
+  db.raw(`SELECT setval('places_id_seq, ?)`, [
+    testPlaces[testPlaces.length -1].id,
+  ])
+  )
+}
+
 function seedMaliciousSite(db, user) {
   return seedUser(db, [user]).then(() => db.into("user").insert([user]));
 }
@@ -209,4 +223,5 @@ module.exports = {
   seedUser,
   seedSites,
   seedInventory,
+  seedPlaces,
 };
