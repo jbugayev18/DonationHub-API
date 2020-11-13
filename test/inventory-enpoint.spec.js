@@ -2,6 +2,7 @@ const knex = require("knex");
 const jwt = require("jsonwebtoken");
 const app = require("../src/app");
 const helpers = require("./test-helpers");
+<<<<<<< HEAD
 const supertest = require("supertest");
 
 descrribe("inventory endpoint", function() {
@@ -41,3 +42,5 @@ descrribe("inventory endpoint", function() {
     })
 
 })
+=======
+>>>>>>> e215d3ced3b2849fbd949ea39a3140ef0e2c17fd
