@@ -2,6 +2,7 @@ const express = require("express");
 const InventoryService = require("./inventory-service");
 const { sanitizeFields } = require("../utils");
 const inventoryRouter = express.Router();
+const { requireAuth } = require("../middleware/jwt-auth");
 
 inventoryRouter.route("/").get((req, res, next) => {
   InventoryService.getAllItemsfromSites(req.app.get("db")).then((items) => {
@@ -53,18 +54,21 @@ inventoryRouter.route("/:site_id/items/:item_id").put(async (req, res) => {
 
 //POST an item into the inventory
 
-inventoryRouter.route("/:site_id/items").post(async (req, res, next) => {
-  const db = req.app.get("db");
-  const { item_name, critical_amount, site_id } = req.body;
-  let new_item = { item_name, critical_amount, site_id };
-  // new_item = sanitizeFields(new_item);
-  try {
-    const item = await InventoryService.addNewItem(db, new_item);
-    res.status(201).json(item);
-  } catch (err) {
-    next(err);
-  }
-});
+inventoryRouter
+  .use(requireAuth)
+  .route("/:site_id/items")
+  .post(async (req, res, next) => {
+    const db = req.app.get("db");
+    const { item_name, critical_amount, site_id } = req.body;
+    let new_item = { item_name, critical_amount, site_id };
+    // new_item = sanitizeFields(new_item);
+    try {
+      const item = await InventoryService.addNewItem(db, new_item);
+      res.status(201).json(item);
+    } catch (err) {
+      next(err);
+    }
+  });
 
 inventoryRouter.route("/:site_id/items/:item_id").delete(async (req, res) => {
   //Remove item from site. This should only be done from the administrator
