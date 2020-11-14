@@ -44,13 +44,15 @@ const InventoryService = {
     });
   },
   addNewItem(db, new_item) {
-    return db
-      .insert(new_item)
-      .into("inventory")
-      // .returning("*")
-      .then((rows) => {
-        return rows[0];
-      });
+    return (
+      db
+        .insert(new_item)
+        .into("inventory")
+        // .returning("*")
+        .then((rows) => {
+          return rows[0];
+        })
+    );
   },
 
   //Delete an Item by Id
