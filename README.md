@@ -2,7 +2,7 @@
 
 </br>
 
-Thank you for visinting DonationHub, a collaborative project created by John Adney,
+Thank you for visinting DonationHub, a collaborative project created by 
 Julia Bugayev, Angela Thomas, and Kayleigh Young!
 </br>
 If you would like to view the DonationHub website, follow this link:
