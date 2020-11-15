@@ -106,7 +106,6 @@ function makeDonationFixtures() {
   const testUsers = makeUsersArray();
   const testSites = makeSitesArray();
   const testInventory = makeInventoryArray();
-  const testRegistration = makeRegistrationArray();
   return { testUsers, testSites, testInventory };
 }
 
@@ -245,7 +244,7 @@ module.exports = {
   makeDonationFixtures,
   makeAuthHeader,
   makeMaliciousThing,
-
+  makeRegistrationArray,
   cleanTables,
   seedDonationTables,
   seedMaliciousSite,
