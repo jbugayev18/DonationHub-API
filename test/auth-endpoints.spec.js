@@ -4,11 +4,10 @@ const app = require("../src/app");
 const helpers = require("./test-helpers");
 
 describe.only("Auth Endpoints", function () {
-  let db;
-
-  const { testUsers } = helpers.makeDonationFixtures();
+  const testUsers = helpers.makeUsersArray();
+  console.log(testUsers, "TESTUSER");
   const testUser = testUsers[0];
-  console.log(testUser[0], "TESTUSER");
+  console.log(testUser);
 
   before("make knext instance", () => {
     db = knex({
@@ -52,7 +51,7 @@ describe.only("Auth Endpoints", function () {
   it.skip(`responds 400 'invalid username or password' when bad password`, () => {
     const userInvalidPassword = {
       username: testUser.username,
-      password: "incorrect",
+      label: "incorrect",
     };
     return supertest(app)
       .post("/api/auth/token")
@@ -63,7 +62,7 @@ describe.only("Auth Endpoints", function () {
   it.only(`responds 200 and JWT auth token using secret when valid credentials`, () => {
     const userValidCredentials = {
       username: testUser.username,
-      password: testUser.password,
+      label: testUser.label,
     };
     const expectedToken = jwt.sign(
       { user_id: testUser.id },
