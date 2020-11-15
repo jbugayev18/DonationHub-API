@@ -157,17 +157,22 @@ function cleanTables(db) {
   );
 }
 
-function seedUser(db, user) {
-  const preppedUsers = user.map((user) => ({
+function seedUser(db, users) {
+  const preppedUsers = users.map((user) => ({
     ...user,
-    // password: bcrypt.hashSync(user.password, 1),
+    label: bcrypt.hashSync(user.label, 1),
   }));
-  return db
-    .into("user")
-    .insert(preppedUsers)
-    .then(() =>
-      db.raw(`SELECT setval('user_id_seq', ?)`, [user[user.length - 1].id])
-    );
+  return db.transaction(async (trx) => {
+    await trx.into("user").insert(preppedUsers);
+    await trx.raw(`SELECT setval('user_id_seq', ?)`, [
+      users[users.length - 1].id,
+    ]);
+  });
+  // .into("user")
+  // .insert(preppedUsers)
+  // .then(() =>
+  //   db.raw(`SELECT setval('user_id_seq', ?)`, [users[users.length - 1].id])
+  // );
 }
 
 function seedDonationTables(db, user, sites, inventory = []) {

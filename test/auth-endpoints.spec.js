@@ -16,9 +16,10 @@ describe.only("Auth Endpoints", function () {
     });
     app.set("db", db);
   });
-
-  // const db = app.get("db");
-  // console.log(db, "DATABASE");
+  after("disconnect from db", () => db.destroy());
+  before("cleanup", () => helpers.cleanTables(db));
+  afterEach("cleanup", () => helpers.cleanTables(db));
+  beforeEach("insert users", () => helpers.seedUser(db, testUsers));
 
   const requiredFields = ["username", "password"];
 
@@ -81,8 +82,22 @@ describe.only("Auth Endpoints", function () {
   });
 });
 
-describe.skip(`POST /api/auth/token`, () => {
-  beforeEach("insert users", () => helpers.seedUsers(db, testUsers));
+describe.only(`POST /api/auth/token`, () => {
+  const testUsers = helpers.makeUsersArray();
+
+  const testUser = testUsers[0];
+
+  before("make knext instance", () => {
+    db = knex({
+      client: "pg",
+      connection: process.env.TEST_DATABASE_URL,
+    });
+    app.set("db", db);
+  });
+  after("disconnect from db", () => db.destroy());
+  before("cleanup", () => helpers.cleanTables(db));
+  afterEach("cleanup", () => helpers.cleanTables(db));
+  beforeEach("insert users", () => helpers.seedUser(db, testUsers));
 
   it(`responds 200 and JWT auth token using secret`, () => {
     const expectedToken = jwt.sign(
@@ -94,8 +109,8 @@ describe.skip(`POST /api/auth/token`, () => {
       }
     );
     return supertest(app)
-      .post("/api/auth/token")
-      .set("Authorization") //helpers.makeAuthHeader(testUser))
+      .put("/api/auth/token")
+      .set("Authorization", helpers.makeAuthHeader(testUser)) //helpers.makeAuthHeader(testUser))
       .expect(200, {
         authToken: expectedToken,
       });
