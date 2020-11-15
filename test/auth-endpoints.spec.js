@@ -3,11 +3,23 @@ const jwt = require("jsonwebtoken");
 const app = require("../src/app");
 const helpers = require("./test-helpers");
 
-describe.skip("Auth Endpoints", function () {
+describe.only("Auth Endpoints", function () {
+  let db;
+
   const { testUsers } = helpers.makeDonationFixtures();
   const testUser = testUsers[0];
+  console.log(testUser[0], "TESTUSER");
 
-  const db = app.get("db");
+  before("make knext instance", () => {
+    db = knex({
+      client: "pg",
+      connection: process.env.TEST_DATABASE_URL,
+    });
+    app.set("db", db);
+  });
+
+  // const db = app.get("db");
+  // console.log(db, "DATABASE");
 
   const requiredFields = ["username", "password"];
 
@@ -17,7 +29,7 @@ describe.skip("Auth Endpoints", function () {
       password: "password",
     };
 
-    it(`responds with 400 required error when '${field}' is missing`, () => {
+    it.skip(`responds with 400 required error when '${field}' is missing`, () => {
       delete loginAttemptBody[field];
 
       return supertest(app)
@@ -29,26 +41,26 @@ describe.skip("Auth Endpoints", function () {
     });
   });
 
-  it(`responds 400 'invalid username or password' when bad username`, () => {
+  it.skip(`responds 400 'invalid username or password' when bad username`, () => {
     const userInvalidUser = { username: "user-not", password: "existy" };
     return supertest(app)
-      .post("/api/auth/login")
+      .post("/api/auth/token")
       .send(userInvalidUser)
       .expect(400, { error: `Incorrect username or password` });
   });
 
-  it(`responds 400 'invalid username or password' when bad password`, () => {
+  it.skip(`responds 400 'invalid username or password' when bad password`, () => {
     const userInvalidPassword = {
       username: testUser.username,
       password: "incorrect",
     };
     return supertest(app)
-      .post("/api/auth/login")
+      .post("/api/auth/token")
       .send(userInvalidPassword)
       .expect(400, { error: `Incorrect username or password` });
   });
 
-  it(`responds 200 and JWT auth token using secret when valid credentials`, () => {
+  it.only(`responds 200 and JWT auth token using secret when valid credentials`, () => {
     const userValidCredentials = {
       username: testUser.username,
       password: testUser.password,
@@ -70,7 +82,7 @@ describe.skip("Auth Endpoints", function () {
   });
 });
 
-describe(`POST /api/auth/refresh`, () => {
+describe.skip(`POST /api/auth/token`, () => {
   beforeEach("insert users", () => helpers.seedUsers(db, testUsers));
 
   it(`responds 200 and JWT auth token using secret`, () => {
@@ -83,7 +95,7 @@ describe(`POST /api/auth/refresh`, () => {
       }
     );
     return supertest(app)
-      .post("/api/auth/refresh")
+      .post("/api/auth/token")
       .set("Authorization") //helpers.makeAuthHeader(testUser))
       .expect(200, {
         authToken: expectedToken,

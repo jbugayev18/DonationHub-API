@@ -56,6 +56,18 @@ function makeSitesArray() {
       url: "https://donateplease.com",
       website: "donateplease.com",
     },
+    {
+      id: 3,
+      lat: 20,
+      lon: 20,
+      label: "Donation Shelter",
+      address: "1111 Donation Drive",
+      description: "A donation location",
+      formatted_phone_number: "123-456-7890",
+      place_id: "Ldifnaopferin",
+      url: "https://donate.com",
+      website: "donate.com",
+    },
   ];
 }
 
@@ -216,7 +228,6 @@ function seedMaliciousSite(db, user) {
 }
 
 function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
-  console.log(secret, "blablablablabla");
   const token = jwt.sign({ user_id: user.id }, secret, {
     subject: user.username,
     algorithm: "HS256",
